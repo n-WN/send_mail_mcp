@@ -8,12 +8,13 @@ version = "0.1.0"
 description = "邮件发送工具，基于 FastMCP 框架"
 readme = "README.md"
 requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
 authors = [
     {name = "n-WN"},
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -27,9 +28,22 @@ dev = [
     "ruff",
 ]
 
-# 添加构建目标配置，明确指定要包含的文件
+# 添加命令行入口点
+[project.scripts]
+send-email = "fastmcp_email_sender.cli:main"
+
+# 构建目标配置，明确指定要包含的文件
 [tool.hatch.build.targets.wheel]
 packages = ["."]
+
+# uv特定配置
+[tool.uv]
+package = true
+environments = [
+    "sys_platform == 'darwin'",
+    "sys_platform == 'linux'",
+    "sys_platform == 'win32'",
+]
 
 [tool.ruff]
 line-length = 88
